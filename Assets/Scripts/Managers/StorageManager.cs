@@ -28,8 +28,12 @@ public class StorageManager : MonoBehaviour
             {
                 cargoMove.StopCargo();
                 cargoMove.ChangeDirection();
-                cargo.LoadCargo();
-                storage.AddArrows(cargo.MaxWeight);
+                if (cargo.IsLoad)
+                {
+                    cargo.LoadCargo();
+                    storage.AddArrows(cargo.MaxWeight);
+                }
+                cargoMove.MoveCargo();
                 score.Score(storage.ArrowCount);
             }
         }

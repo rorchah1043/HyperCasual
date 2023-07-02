@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "TouchPosition",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "24aa95f0-f8c2-4c1b-9ec3-b8e789b45380",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -19,7 +19,7 @@
                 {
                     "name": "",
                     "id": "e62d9757-d7e6-46a3-8596-a45eea2cfc39",
-                    "path": "<Mouse>/position",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -30,7 +30,7 @@
                 {
                     "name": "",
                     "id": "8a37c9e3-3edf-4c17-9ed8-017c3a780d82",
-                    "path": "<Touchscreen>/position",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

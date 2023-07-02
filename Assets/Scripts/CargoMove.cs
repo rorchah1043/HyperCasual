@@ -13,14 +13,15 @@ public class CargoMove : MonoBehaviour
     private bool _isDirectionToCave;
 
     [SerializeField] private float _speed;
-    private float _distancePercentage = 0f;
+    [SerializeField] private float _friction;
+    private float _distancePercentage = 0.02f;
     private float _splineLength;
 
     private void Awake()
     {
         _cargo = GetComponent<Cargo>();
         _speed = _cargo.Speed;
-        _isMoving = false;
+        _isMoving = true;
         _splineLength = _spline.CalculateLength();
         _isDirectionToCave = true;
     }
@@ -66,6 +67,12 @@ public class CargoMove : MonoBehaviour
 
     private void MoveForward()
     {
+        _speed -= _friction * Time.deltaTime;
+        if(_speed < _cargo.Speed)
+        {
+            _speed = _cargo.Speed;
+        }
+
         _distancePercentage += _speed * Time.deltaTime / _splineLength;
 
         Vector3 currentPosition = _spline.EvaluatePosition(_distancePercentage);
@@ -76,13 +83,18 @@ public class CargoMove : MonoBehaviour
             _distancePercentage = 0f;
         }
 
-        Vector3 nextPosition = _spline.EvaluatePosition(_distancePercentage + 0.05f);
-        Vector3 direction = nextPosition - currentPosition;
+        Vector3 direction = _spline.EvaluateTangent(_distancePercentage);
         transform.rotation = Quaternion.LookRotation(direction, transform.up);
     }
 
     private void MoveBack()
     {
+        _speed -= _friction * Time.deltaTime;
+        if (_speed < _cargo.Speed)
+        {
+            _speed = _cargo.Speed;
+        }
+
         _distancePercentage -= _speed * Time.deltaTime / _splineLength;
 
         Vector3 currentPosition = _spline.EvaluatePosition(_distancePercentage);
@@ -93,8 +105,7 @@ public class CargoMove : MonoBehaviour
             _distancePercentage = 1f;
         }
 
-        Vector3 nextPosition = _spline.EvaluatePosition(_distancePercentage - 0.05f);
-        Vector3 direction = nextPosition - currentPosition;
-        transform.rotation = Quaternion.LookRotation(direction, transform.up);
+        Vector3 direction = _spline.EvaluateTangent(_distancePercentage);
+        transform.rotation = Quaternion.LookRotation(-direction, transform.up);
     }
 }

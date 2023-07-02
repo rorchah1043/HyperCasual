@@ -24,6 +24,7 @@ public class CaveManager : MonoBehaviour
                 cargoMove.StopCargo();
                 cargoMove.ChangeDirection();
                 cargo.LoadCargo();
+                cargoMove.MoveCargo();
             }
         }
     }

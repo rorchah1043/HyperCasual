@@ -25,8 +25,7 @@ public class TouchScreenManager : MonoBehaviour
 
     private void ToMoveCargo(InputValue value)
     {
-        Ray ray = mainCamera.ScreenPointToRay(value.Get<Vector2>());
-
+        Ray ray = mainCamera.ScreenPointToRay(Pointer.current.position.ReadValue());
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             if (hit.collider.CompareTag("Cargo"))
