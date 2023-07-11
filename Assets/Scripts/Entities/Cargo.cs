@@ -9,11 +9,11 @@ public class Cargo : MonoBehaviour
 
     [SerializeField] private float _speedCargo;
 
-    public float Speed { get => _speedCargo; }
+    public float Speed => _speedCargo;
 
-    public bool IsLoad { get => _isLoaded; }
-    public int MaxWeight { get => _maxWeight; }
+    public bool IsLoad => _isLoaded;
+    public int MaxWeight => _maxWeight;
 
     public void LoadCargo() => _isLoaded = true;
-
+    public void UnloadCargo() => _isLoaded = false;
 }

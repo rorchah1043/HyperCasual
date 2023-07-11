@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Serialization;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -22,21 +23,32 @@ public class StorageManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Cargo"))
+        if (other.CompareTag("Cargo"))
         {
-            if(cargoMove.IsMoving())
+            if (cargoMove.IsMoving())
             {
                 cargoMove.StopCargo();
                 cargoMove.ChangeDirection();
                 if (cargo.IsLoad)
                 {
-                    cargo.LoadCargo();
+                    cargo.UnloadCargo();
                     storage.AddArrows(cargo.MaxWeight);
                 }
+
                 cargoMove.MoveCargo();
                 score.Score(storage.ArrowCount);
             }
         }
     }
 
+    public void TakeArrow()
+    {
+        storage.SubtractArrow();
+        score.Score(storage.ArrowCount);
+    }
+
+    public int GetArrowCount()
+    {
+        return storage.ArrowCount;
+    }
 }

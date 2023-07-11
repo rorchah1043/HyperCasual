@@ -24,7 +24,10 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, wall.transform.position, speed * Time.deltaTime);
+        var wallPosition = wall.transform.position;
+        var position = transform.position;
+        transform.position = Vector3.MoveTowards(position, wallPosition, speed * Time.deltaTime);
+        transform.rotation = Quaternion.LookRotation(wallPosition - position);
     }
 
     private void OnTriggerEnter(Collider other)

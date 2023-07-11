@@ -12,7 +12,7 @@ public class Wall : MonoBehaviour
     public Material blinkOnMaterial;
     public Material blinkOffMaterial;
 
-    public TextMeshPro healthDisplay;
+    public TextMeshProUGUI healthDisplay;
 
     private int _blinksRemaining;
     private float _blinkTimestamp = float.NegativeInfinity;

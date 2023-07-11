@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Archer : MonoBehaviour
 {
-    public ArrowStorageMock arrowStorage;
+    public StorageManager arrowStorage;
     public Arrow arrowPrefab;
     public float shootPeriod;
 
@@ -11,10 +11,14 @@ public class Archer : MonoBehaviour
 
     private void Update()
     {
-        if (Time.time - _lastShotTimestamp < shootPeriod || !arrowStorage.HasArrowsAvailable()) return;
-
         var closestEnemy = FindClosestEnemy();
         if (closestEnemy == null) return;
+
+        var lookDirection = closestEnemy.transform.position - transform.position;
+        lookDirection.y = 0;
+        transform.rotation = Quaternion.LookRotation(lookDirection);
+        
+        if (Time.time - _lastShotTimestamp < shootPeriod || arrowStorage.GetArrowCount() <= 0) return;
 
         Shoot(closestEnemy.gameObject);
     }
@@ -27,9 +31,10 @@ public class Archer : MonoBehaviour
         var minDistance = float.PositiveInfinity;
         Enemy closestEnemy = null;
 
+        var position = transform.position;
         foreach (var enemy in enemies)
         {
-            var distance = Vector3.Distance(transform.position, enemy.transform.position);
+            var distance = Vector3.Distance(position, enemy.transform.position);
             if (distance < minDistance)
             {
                 minDistance = distance;

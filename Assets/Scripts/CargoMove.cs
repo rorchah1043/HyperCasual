@@ -38,10 +38,9 @@ public class CargoMove : MonoBehaviour
             {
                 MoveBack();
             }
-      
         }
-        
     }
+    
     public void ChangeDirection()
     {
         _isDirectionToCave = !_isDirectionToCave;
@@ -80,11 +79,11 @@ public class CargoMove : MonoBehaviour
 
         if (_distancePercentage > 1f)
         {
-            _distancePercentage = 0f;
+            _distancePercentage = 1f;
         }
 
         Vector3 direction = _spline.EvaluateTangent(_distancePercentage);
-        transform.rotation = Quaternion.LookRotation(direction, transform.up);
+        transform.rotation = Quaternion.LookRotation(direction) * Quaternion.AngleAxis(-90, Vector3.right);
     }
 
     private void MoveBack()
@@ -102,10 +101,10 @@ public class CargoMove : MonoBehaviour
 
         if (_distancePercentage < 0f)
         {
-            _distancePercentage = 1f;
+            _distancePercentage = 0f;
         }
 
         Vector3 direction = _spline.EvaluateTangent(_distancePercentage);
-        transform.rotation = Quaternion.LookRotation(-direction, transform.up);
+        transform.rotation = Quaternion.LookRotation(-direction) * Quaternion.AngleAxis(-90, Vector3.right);
     }
 }
